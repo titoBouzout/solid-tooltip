@@ -1,0 +1,30 @@
+{
+	"name": "solid-tooltip",
+	"version": "0.1.4",
+	"description": "Directive for displaying tooltips on SolidJS components given a `title` attribute.",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/titoBouzout/solid-tooltip.git"
+	},
+	"keywords": ["solidjs", "solid", "tooltip", "tooltiptext", "alt"],
+	"author": "Tito Bouzout",
+	"license": "GPL",
+	"bugs": {
+		"url": "https://github.com/titoBouzout/solid-tooltip/issues"
+	},
+	"homepage": "https://github.com/titoBouzout/solid-tooltip#readme",
+	"prettier": {
+		"printWidth": 100,
+		"useTabs": true,
+		"semi": false,
+		"singleQuote": true,
+		"jsxSingleQuote": false,
+		"trailingComma": "all",
+		"bracketSpacing": true,
+		"jsxBracketSameLine": false,
+		"arrowParens": "avoid",
+		"quoteProps": "preserve",
+		"proseWrap": "preserve"
+	}
+}
