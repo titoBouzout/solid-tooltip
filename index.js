@@ -1,5 +1,6 @@
 import { createMutable } from 'solid-js/store'
 import { onCleanup, onMount } from 'solid-js'
+import { insert } from 'solid-js/web'
 
 // state
 let local = createMutable({
@@ -21,20 +22,20 @@ let portal = (
 			local.open = true
 		}}
 		onMouseOut={close}
-		style={`
-			position: fixed;
-			z-index: 9999;
-			width: max-content;
-			box-sizing: border-box;
-			top: ${local.y}px;
-			left: ${local.x}px;
-			display: ${local.open ? 'block' : 'none'};
-		`}
+		style={{
+			position: "fixed",
+			"z-index": "9999",
+			width: "max-content",
+			"box-sizing": "border-box",
+			top: local.y+'px',
+			left: local.x+'px',
+			display: local.open ? 'block' : 'none'
+		}}
 	>
 		{local.content}
 	</div>
 )
-document.body.appendChild(portal)
+insert(document.body, portal)
 
 // directive
 export default function Tooltip(related, at, wrap) {
