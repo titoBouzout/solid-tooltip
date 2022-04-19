@@ -1,13 +1,19 @@
 {
 	"name": "solid-tooltip",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Directive for displaying tooltips on SolidJS components given a `title` attribute.",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/solid-tooltip.git"
 	},
-	"keywords": ["solidjs", "solid", "tooltip", "tooltiptext", "alt"],
+	"keywords": [
+		"solidjs",
+		"solid",
+		"tooltip",
+		"tooltiptext",
+		"alt"
+	],
 	"author": "Tito Bouzout",
 	"license": "GPL",
 	"bugs": {
