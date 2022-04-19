@@ -31,31 +31,47 @@ Appends one div container to the body. Whenever your mouse moves over the compon
 Customizing the tooltip is as simple as writting a wrapper. Lets say you want a tooltip that displays multiple lines.
 
 ```jsx
+//fancy-tooltip.js
+
+import { createSignal } from 'solid-js'
 import tooltip from 'solid-tooltip'
 
-function myMultipleLinesTooltip(related, at) {
-	return tooltip(related, at, (title, position) => {
-		return (
-			<div
-				style={`
-					background:orange;
-					color:black;
-					border:1px solid white;
-					white-space: pre-wrap;
-					font-size:.8rem;
-					padding:6px;
-					margin:3px;
-				`}
-			>
-				{title
-					.split('\n')
-					.map(s => s.trim())
-					.join('\n')
-					.trim()}
-			</div>
+// create a signal to read/set the tooltip content
+const [content, setContent] = createSignal()
+
+// create the custom div that we will reuse on every tooltip
+const container = (
+	<div
+		style={`
+			background:orange;
+			color:black;
+			border:1px solid white;
+			white-space: pre-wrap;
+			font-size:.8rem;
+			padding:6px;
+			margin:3px;
+		`}
+	>
+		{content()}
+	</div>
+)
+
+export default function myMultipleLinesTooltip(related, at) {
+	return tooltip(related, at, (tooltip, position) => {
+		setContent(
+			tooltip
+				.split('\n')
+				.map(s => s.trim())
+				.join('\n')
+				.trim(),
 		)
+		return container
 	})
 }
+
+// other-file.js
+
+import myMultipleLinesTooltip from './fancy-tooltip.js'
 
 export default function YourComponent() {
 	return (
