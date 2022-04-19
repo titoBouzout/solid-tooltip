@@ -5,8 +5,6 @@ import { insert } from 'solid-js/web'
 // state
 let local = createMutable({
 	open: false,
-	x: 0,
-	y: 0,
 	content: null,
 	position: 'top',
 	currentTitle: null,
@@ -21,17 +19,18 @@ let portal = (
 		aria-label="tooltip text"
 		onMouseOver={() => {
 			local.open = true
+			tooltip.style.setProperty('display', 'block')
 		}}
 		onMouseOut={close}
-		style={{
-			position: 'fixed',
-			'z-index': '9999',
-			width: 'max-content',
-			'box-sizing': 'border-box',
-			top: local.y + 'px',
-			left: local.x + 'px',
-			display: local.open ? 'block' : 'none',
-		}}
+		style={`
+			position: fixed;
+			z-index: 9999;
+			top: var(--y);
+			left: var(--x);
+			width: max-content;
+			box-sizing: border-box;
+			display: none;
+		`}
 	>
 		{local.content}
 	</div>
@@ -94,6 +93,7 @@ window.addEventListener('blur', e => {
 
 function close() {
 	local.open = false
+	tooltip.style.setProperty('display', 'none')
 }
 
 // update when opening
@@ -115,6 +115,7 @@ function update(related, at, title, wrapper) {
 
 		local.position = position
 		local.open = true
+		tooltip.style.setProperty('display', 'block')
 
 		// get coordinates
 		let tooltipRect = tooltip.getBoundingClientRect()
@@ -210,8 +211,7 @@ function update(related, at, title, wrapper) {
 			y = document.body.clientHeight - tooltipHeight - margin
 		}
 
-		// trigger reactivity
-		local.x = x
-		local.y = y
+		tooltip.style.setProperty('--x', (x | 0) + 'px')
+		tooltip.style.setProperty('--y', (y | 0) + 'px')
 	}
 }
