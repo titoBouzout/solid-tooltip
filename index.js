@@ -9,6 +9,7 @@ let local = createMutable({
 	y: 0,
 	content: null,
 	position: 'top',
+	currentTitle: null,
 })
 
 // create container
@@ -23,19 +24,41 @@ let portal = (
 		}}
 		onMouseOut={close}
 		style={{
-			position: "fixed",
-			"z-index": "9999",
-			width: "max-content",
-			"box-sizing": "border-box",
-			top: local.y+'px',
-			left: local.x+'px',
-			display: local.open ? 'block' : 'none'
+			position: 'fixed',
+			'z-index': '9999',
+			width: 'max-content',
+			'box-sizing': 'border-box',
+			top: local.y + 'px',
+			left: local.x + 'px',
+			display: local.open ? 'block' : 'none',
 		}}
 	>
 		{local.content}
 	</div>
 )
 insert(document.body, portal)
+
+// for when a tooltip style is not defined
+// it reuses the div
+let defaultTooltipStyle = (
+	<div
+		style={`
+			margin: 3px;
+			border-radius: 3px;
+			padding: 6px;
+
+			box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.05);
+			color: snow;
+			background: #282828;
+			border: 1px solid grey;
+			font-size: 0.8rem;
+
+			text-transform: capitalize;
+		`}
+	>
+		{local.currentTitle}
+	</div>
+)
 
 // directive
 export default function Tooltip(related, at, wrap) {
@@ -83,28 +106,13 @@ function update(related, at, title, wrapper) {
 		related.removeAttribute('title')
 
 		// if theres no wrapper, provide a default
-		local.content =
-			wrapper !== undefined ? (
-				wrapper(currentTitle, position)
-			) : (
-				<div
-					style={`
-						margin: 3px;
-						border-radius: 3px;
-						padding: 6px;
+		if (wrapper !== undefined) {
+			local.content = wrapper(currentTitle, position)
+		} else {
+			local.currentTitle = currentTitle
+			local.content = defaultTooltipStyle
+		}
 
-						box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.05);
-						color: snow;
-						background: #282828;
-						border: 1px solid grey;
-						font-size: 0.8rem;
-
-						text-transform: capitalize;
-					`}
-				>
-					{currentTitle}
-				</div>
-			)
 		local.position = position
 		local.open = true
 
