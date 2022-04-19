@@ -13,16 +13,15 @@ let local = createMutable({
 // create container
 let tooltip
 let portal = (
-	<Portal>
-		<div
-			ref={tooltip}
-			role="window"
-			aria-label="tooltip text"
-			onMouseOver={() => {
-				local.open = true
-			}}
-			onMouseOut={close}
-			style={`
+	<div
+		ref={tooltip}
+		role="window"
+		aria-label="tooltip text"
+		onMouseOver={() => {
+			local.open = true
+		}}
+		onMouseOut={close}
+		style={`
 			position: fixed;
 			z-index: 9999;
 			width: max-content;
@@ -31,10 +30,9 @@ let portal = (
 			left: ${local.x}px;
 			display: ${local.open ? 'block' : 'none'};
 		`}
-		>
-			{local.content}
-		</div>
-	</Portal>
+	>
+		{local.content}
+	</div>
 )
 document.body.appendChild(portal)
 
