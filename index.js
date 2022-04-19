@@ -5,8 +5,8 @@ import { insert } from 'solid-js/web'
 // state
 let local = createMutable({
 	open: false,
-	content: null,
 	position: 'top',
+	content: null,
 	currentTitle: null,
 })
 
@@ -118,80 +118,71 @@ function update(related, at, title, wrapper) {
 		tooltip.style.setProperty('display', 'block')
 
 		// get coordinates
-		let tooltipRect = tooltip.getBoundingClientRect()
-		let tooltipWidth = tooltipRect.width
-		let tooltipHeight = tooltipRect.height
-
-		let relatedRect = related.getBoundingClientRect()
-		let relatedWidth = relatedRect.width
-		let relatedHeight = relatedRect.height
-		let relatedTop = relatedRect.top
-		let relatedLeft = relatedRect.left
-		let relatedBottom = relatedRect.bottom
-		let relatedRight = relatedRect.right
+		let t = tooltip.getBoundingClientRect()
+		let r = related.getBoundingClientRect()
 
 		let x, y
 
 		switch (position) {
 			case 'bottom': {
-				x = relatedLeft + (relatedWidth / 2 - tooltipWidth / 2)
-				y = relatedBottom
+				x = r.left + (r.width / 2 - t.width / 2)
+				y = r.bottom
 				break
 			}
 			case 'bottom-left': {
-				x = relatedLeft - tooltipWidth
-				y = relatedBottom
+				x = r.left - t.width
+				y = r.bottom
 				break
 			}
 			case 'bottom-left-overlap': {
-				x = relatedWidth + relatedLeft - tooltipWidth
-				y = relatedBottom
+				x = r.width + r.left - t.width
+				y = r.bottom
 				break
 			}
 			case 'bottom-right': {
-				x = relatedRect.right
-				y = relatedBottom
+				x = r.right
+				y = r.bottom
 				break
 			}
 			case 'bottom-right-overlap': {
-				x = relatedRect.right - relatedWidth
-				y = relatedBottom
+				x = r.right - r.width
+				y = r.bottom
 				break
 			}
 			case 'top-left': {
-				x = relatedLeft - tooltipWidth
-				y = relatedTop - tooltipHeight
+				x = r.left - t.width
+				y = r.top - t.height
 				break
 			}
 			case 'top-left-overlap': {
-				x = relatedWidth + relatedLeft - tooltipWidth
-				y = relatedTop - tooltipHeight
+				x = r.width + r.left - t.width
+				y = r.top - t.height
 				break
 			}
 			case 'top-right': {
-				x = relatedRight
-				y = relatedTop - tooltipHeight
+				x = r.right
+				y = r.top - t.height
 				break
 			}
 			case 'top-right-overlap': {
-				x = relatedRight - relatedWidth
-				y = relatedTop - tooltipHeight
+				x = r.right - r.width
+				y = r.top - t.height
 				break
 			}
 			case 'left': {
-				x = relatedLeft - tooltipWidth
-				y = relatedTop + (relatedHeight / 2 - tooltipHeight / 2)
+				x = r.left - t.width
+				y = r.top + (r.height / 2 - t.height / 2)
 				break
 			}
 			case 'right': {
-				x = relatedRight
-				y = relatedTop + (relatedHeight / 2 - tooltipHeight / 2)
+				x = r.right
+				y = r.top + (r.height / 2 - t.height / 2)
 				break
 			}
 			case 'top':
 			default: {
-				x = relatedLeft + (relatedWidth / 2 - tooltipWidth / 2)
-				y = relatedTop - tooltipHeight
+				x = r.left + (r.width / 2 - t.width / 2)
+				y = r.top - t.height
 				break
 			}
 		}
@@ -201,14 +192,14 @@ function update(related, at, title, wrapper) {
 		let margin = 5
 		if (x < margin) {
 			x = margin
-		} else if (x + tooltipWidth + margin >= document.body.clientWidth) {
-			x = document.body.clientWidth - tooltipWidth - margin
+		} else if (x + t.width + margin >= document.body.clientWidth) {
+			x = document.body.clientWidth - t.width - margin
 		}
 
 		if (y < margin) {
 			y = margin
-		} else if (y + tooltipHeight + margin >= document.body.clientHeight) {
-			y = document.body.clientHeight - tooltipHeight - margin
+		} else if (y + t.height + margin >= document.body.clientHeight) {
+			y = document.body.clientHeight - t.height - margin
 		}
 
 		tooltip.style.setProperty('--x', (x | 0) + 'px')
