@@ -1,6 +1,6 @@
 {
 	"name": "solid-tooltip",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "Directive for displaying tooltips on SolidJS components given a `title` attribute.",
 	"main": "index.js",
 	"repository": {
