@@ -74,13 +74,13 @@ export default function Tooltip(related, at, wrap) {
 
 	related.addEventListener('mouseover', open)
 	related.addEventListener('mouseout', close)
-	related.addEventListener('click', close)
+	related.addEventListener('mousedown', close)
 
 	onCleanup(() => {
 		close()
 		related.removeEventListener('mouseover', open)
 		related.removeEventListener('mouseout', close)
-		related.removeEventListener('click', close)
+		related.removeEventListener('mousedown', close)
 	})
 }
 
