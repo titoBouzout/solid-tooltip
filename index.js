@@ -24,7 +24,7 @@ let portal = (
 		onMouseOut={close}
 		style={`
 			position: fixed;
-			z-index: 9999;
+			z-index: 2147483646;
 			top: var(--y);
 			left: var(--x);
 			width: max-content;
@@ -35,7 +35,10 @@ let portal = (
 		{local.content}
 	</div>
 )
-insert(document.body, portal)
+
+queueMicrotask(() => {
+	insert(document.body, portal)
+})
 
 // for when a tooltip style is not defined
 // it reuses the div
