@@ -66,8 +66,19 @@ let defaultTooltipStyle = (
 export default function Tooltip(related, at, wrap) {
 	let title
 
+	at = at()
 	onMount(() => {
-		title = related.title || related.getAttribute('title') || ''
+		if (Array.isArray(at)) {
+			if (at.length === 1) {
+				title = at[0]
+				at = 'top'
+			} else {
+				title = at[1]
+				at = at[0]
+			}
+		} else {
+			title = related.title || related.getAttribute('title') || ''
+		}
 		related.removeAttribute('title')
 	})
 
@@ -102,10 +113,13 @@ function close() {
 // update when opening
 function update(related, at, title, wrapper) {
 	if (!local.open) {
-		let position = at() || 'top'
+		let position = at || 'top'
 
 		// the current title may have changed
-		let currentTitle = related.title || related.getAttribute('title') || title
+		let currentTitle =
+			typeof title === 'function'
+				? title()
+				: related.title || related.getAttribute('title') || title
 		related.removeAttribute('title')
 
 		// if theres no wrapper, provide a default

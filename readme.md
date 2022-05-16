@@ -4,17 +4,37 @@ Directive for displaying simple tooltips on components given a `title` attribute
 
 A Solid component. See https://www.solidjs.com/
 
-## Usage
+## Simple Usage
 
 ```jsx
 import tooltip from 'solid-tooltip'
 
 export default function YourComponent() {
 	return (
-		<div use:tooltip="bottom" title="the title!">
+		<div use:tooltip="top" title="the title!">
 			hover me!
 		</div>
 	)
+}
+```
+
+## Reactive Usage
+
+```jsx
+import tooltip from 'solid-tooltip'
+
+export default function YourComponent() {
+	return <div use:tooltip={[() => signal()]}>hover me!</div>
+}
+```
+
+## Reactive Usage With Position
+
+```jsx
+import tooltip from 'solid-tooltip'
+
+export default function YourComponent() {
+	return <div use:tooltip={['bottom', () => signal()]}>hover me!</div>
 }
 ```
 
