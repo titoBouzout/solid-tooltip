@@ -89,14 +89,14 @@ export default function Tooltip(related, at, wrap) {
 	related.addEventListener('mouseover', open)
 	related.addEventListener('mouseout', close)
 	related.addEventListener('mousedown', close)
-	document.addEventListener('scroll', close)
+	document.addEventListener('scroll', close, { passive: true })
 
 	onCleanup(() => {
 		close()
 		related.removeEventListener('mouseover', open)
 		related.removeEventListener('mouseout', close)
 		related.removeEventListener('mousedown', close)
-		document.removeEventListener('scroll', close)
+		document.removeEventListener('scroll', close, { passive: true })
 	})
 }
 
