@@ -66,7 +66,7 @@ let defaultTooltipStyle = (
 export default function Tooltip(related, at, wrap) {
 	let title
 
-	at = at()
+	at = at ? at() : ''
 	onMount(() => {
 		if (Array.isArray(at)) {
 			if (at.length === 1) {
@@ -99,11 +99,12 @@ export default function Tooltip(related, at, wrap) {
 }
 
 // close tooltip when switching tabs
-window.addEventListener('blur', e => {
+function closeListener(e) {
 	if (e.target == e.currentTarget) {
 		close()
 	}
-})
+}
+addEventListener('blur', closeListener)
 
 function close() {
 	local.open = false
@@ -219,6 +220,29 @@ function update(related, at, title, wrapper) {
 			y = document.body.clientHeight - t.height - margin
 		}
 
+		// when it overlaps the element move it from the way
+		const overlaps = !(
+			x + t.width <= r.left ||
+			x >= r.right ||
+			y + t.height <= r.top ||
+			y >= r.bottom
+		)
+
+		if (overlaps) {
+			// put it on top
+			y = r.top - t.height
+			if (y < margin) {
+				// if overflows put it on bottom
+				y = r.bottom
+			}
+
+			// put it on left
+			x = r.left
+			if (x < margin) {
+				// if overflows put it on the right
+				x = r.right - t.width
+			}
+		}
 		tooltip.style.setProperty('--x', (x | 0) + 'px')
 		tooltip.style.setProperty('--y', (y | 0) + 'px')
 	}

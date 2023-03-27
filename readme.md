@@ -104,7 +104,7 @@ export default function YourComponent() {
 
 ## Positions
 
-The argument of the direct its just the position.
+The argument of the directive its just the position.
 
 | value                  |
 | ---------------------- |
