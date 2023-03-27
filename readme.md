@@ -48,7 +48,7 @@ Appends one div container to the body. Whenever your mouse moves over the compon
 
 ## Custom Tooltip
 
-Customizing the tooltip is as simple as writting a wrapper. Lets say you want a tooltip that displays multiple lines.
+Customizing the tooltip is as simple as writing a wrapper. Lets say you want a tooltip that displays multiple lines.
 
 ```jsx
 //fancy-tooltip.js
